@@ -51,7 +51,6 @@ export default defineConfig({
         domains: ['creativehive.auxcgen.com'],
     },
 
-    output: 'server',
     adapter: vercel({
         maxDuration: 60,
         imageService: true,
