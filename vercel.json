@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs20.x"
+    },
+    "**/*.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "framework": "astro"
+}
