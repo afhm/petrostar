@@ -2,161 +2,111 @@
 import Layout from '@layouts/Layout.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
-
-const contactInfo = {
-  phone: ['+91 9900254197', '+91 824 2429339', '+91 824 2420339'],
-  email: 'info@northernsky.in',
-  address: ['1st Floor, J V Building, Opposite', 'Government College, Hampankatta,', 'Mangalore - 575001. India.'],
-};
+import Breadcrumb from '@components/Breadcrumb.astro';
 ---
 
-<!-- Contact Us -->
-<Layout title="Contact Us - NorthernSky Properties">
+<Layout>
   <Header />
-  <main class="bg-white text-darkColor">
-    <!-- Contact Banner -->
-    <div class="relative h-[33dvh] overflow-hidden bg-darkColor md:h-[60vh] 2lg:h-[64.5dvh] 3lg:h-[57dvh]">
-      <div class="containerw h-full">
-        <div class="absolute inset-x-0 bottom-0 flex items-end justify-center overflow-hidden">
-          <!-- Background Text --->
-          <span
-            class="fontContactBg mb-[-5vw] font-bold uppercase leading-none tracking-normal opacity-20 2lg:mb-[-8vw] 3lg:mb-[-8vw]"
-          >
-            CONTACT
-          </span>
-        </div>
-        <div class="relative z-10 flex h-full flex-col items-start justify-end 2lg:items-center">
-          <!-- Banner Text -->
-          <span class="fontContact mb-9 uppercase tracking-[12px] text-white md:mb-8 2lg:mb-12 3lg:mb-16">Contact</span>
-        </div>
-      </div>
-    </div>
-    <!-- Content -->
-    <div class="containerw py-12 md:py-[8rem] 2lg:px-[16rem]">
-      <div class="mb-8 2lg:mb-24 2lg:mt-[3rem]">
-        <p class="aboutp font-[200] tracking-tight leading-snug text-darkColor max-w-[84rem]">
-          At NorthernSky Properties, we are committed to providing exceptional customer service and support. Whether you
-          have questions about our projects, need assistance with your property, or want to learn more about our
-          company, our dedicated team is here to help.
-        </p>
-      </div>
-
-      <!-- horizontal line -->
-      <div class="h-[1px] w-full bg-lightColor md:mt-12 2lg:mt-0 md:h-[2px] 2lg:mb-28"></div>
-
-      <div class="grid gap-8 md:grid-cols-2 2lg:mb-[15rem]">
-        <div class="rounded-lg">
-          <h2 class="abouth2 mb-12 font-bold uppercase tracking-[4px] text-darkColor lg:mb-16 2lg:tracking-[6px]">
-            Phone & Email
-          </h2>
-          <ul class="space-y-2">
-            {
-              contactInfo.phone.map((number) => (
-                <li>
-                  <a
-                    href={`tel:${number.replace(/\s/g, '')}`}
-                    class="aboutp text-balance font-[200] leading-relaxed text-darkColor"
-                  >
-                    {number}
-                  </a>
-                </li>
-              ))
-            }
-            <li>
-              <a
-                href={`mailto:${contactInfo.email}`}
-                class="aboutp text-balance font-[200] leading-relaxed text-darkColor"
-              >
-                {contactInfo.email}
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Office Address -->
-        <div class="rounded-lg">
-          <h2 class="abouth2 mb-12 font-bold uppercase tracking-[3.5px] text-darkColor lg:mb-16 2lg:tracking-[8.5px]">
-            Head Office
-          </h2>
-          <address class="aboutp text-balance font-[200] not-italic leading-relaxed text-darkColor">
-            {contactInfo.address.map((line) => <p>{line}</p>)}
-          </address>
-        </div>
-      </div>
-
-      <!-- horizontal line -->
-      <div class="mb-8 mt-8 h-[1px] w-full bg-lightColor md:my-12 md:h-[2px] 2lg:mb-32"></div>
-
-      <!-- Connect WhatsApp -->
-      <div class="mt-8 grid gap-8 md:mt-12 md:grid-cols-2">
-        <div class="rounded-lg">
-          <h2
-            class="abouth2 mb-8 font-bold uppercase tracking-[3.5px] text-darkColor md:mb-16 2lg:mb-24 2lg:tracking-[6px]"
-          >
-            Live Chat
-          </h2>
-          <a
-            href="#"
-            class="aboutbtn inline-flex items-center text-balance rounded-lg bg-darkColor px-3 py-5 font-[200] leading-relaxed text-white transition-colors hover:bg-opacity-90 md:px-11"
-          >
-          <div class="w-[3.5rem] mr-5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" class="mr-3 md:mr-4">
-              <path
-                fill="white"
-                d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"></path>
-            </svg>
+  <Breadcrumb />
+  <section class="wpo-contact-pg-section section-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col col-lg-10 offset-lg-1">
+          <div class="office-info">
+            <div class="row">
+              <div class="col col-xl-4 col-lg-6 col-md-6 col-12">
+                <div class="office-info-item">
+                  <div class="office-info-icon">
+                    <div class="icon">
+                      <i class="fi flaticon-placeholder"></i>
+                    </div>
+                  </div>
+                  <div class="office-info-text">
+                    <h2>Address</h2>
+                    <p>Headquartered in Lagos, Nigeria</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-xl-4 col-lg-6 col-md-6 col-12">
+                <div class="office-info-item">
+                  <div class="office-info-icon">
+                    <div class="icon">
+                      <i class="fi flaticon-email"></i>
+                    </div>
+                  </div>
+                  <div class="office-info-text">
+                    <h2>Email Us</h2>
+                    <p>info@petrostartinnovative.com</p>
+                    <div>&nbsp;</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-xl-4 col-lg-6 col-md-6 col-12">
+                <div class="office-info-item">
+                  <div class="office-info-icon">
+                    <div class="icon">
+                      <i class="fi flaticon-phone-call"></i>
+                    </div>
+                  </div>
+                  <div class="office-info-text">
+                    <h2>Call Now</h2>
+                    <p>+1 800 123 456 789</p>
+                    <p>+1 800 123 654 987</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-            Chat Now
-          </a>
-        </div>
-
-        <div class="mb-8 mt-8 h-[1px] w-full bg-lightColor md:hidden"></div>
-
-        <div class="rounded-lg">
-          <h2
-            class="abouth2 mb-8 font-bold uppercase tracking-[3.5px] text-darkColor md:mb-16 2lg:mb-24 2lg:tracking-[6px]"
-          >
-            Connect on WhatsApp
-          </h2>
-          <a
-            href="#"
-            class="aboutbtn inline-flex items-center text-balance rounded-lg bg-darkColor px-4 py-5 font-[200] leading-relaxed text-white transition-colors hover:bg-opacity-90 md:px-11"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="3.5rem"
-              height="3.5rem"
-              viewBox="0 0 24 24"
-              class="mr-3 fill-current md:mr-4"
-            >
-              <path
-                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"
-              ></path>
-            </svg>
-            Chat on WhatsApp
-          </a>
+          <div class="wpo-contact-title">
+            <h2>Have Any Question?</h2>
+            <p>It is a long established fact that a reader will be distracted content of a page when looking.</p>
+          </div>
+          <div class="wpo-contact-form-area">
+            <form method="post" class="contact-validation-active" id="contact-form-main">
+              <div>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Your Name*" />
+              </div>
+              <div>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email*" />
+              </div>
+              <div>
+                <input type="text" class="form-control" name="adress" id="adress" placeholder="Adress" />
+              </div>
+              <div>
+                <select name="service" class="form-control">
+                  <option disabled="disabled" selected="">Services</option>
+                  <option>Mechanical Engineering</option>
+                  <option>Petroleum Refinery</option>
+                  <option>Power &amp; Energy</option>
+                </select>
+              </div>
+              <div class="fullwidth">
+                <textarea class="form-control" name="note" id="note" placeholder="Message..."></textarea>
+              </div>
+              <div class="submit-area">
+                <button type="submit" class="theme-btn">Get in Touch</button>
+                <div id="loader">
+                  <i class="ti-reload"></i>
+                </div>
+              </div>
+              <div class="clearfix error-handling-messages">
+                <div id="success">Thank you</div>
+                <div id="error">Error occurred while sending email. Please try again later.</div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- Google Maps Iframe -->
-    <div class="h-[50vh] w-full md:h-[83vh] 2lg:mt-[12rem]">
+    <!-- end container -->
+  </section>
+  <section class="wpo-contact-map-section">
+    <h2 class="hidden">Contact map</h2>
+    <div class="wpo-contact-map">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.6412137343655!2d74.83805431133952!3d12.866434687386958!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba35a4d157601e7%3A0x8864951cd5db586b!2sNorthernSky%20Properties%20Pvt%20Ltd!5e0!3m2!1sen!2sin!4v1729585336580!5m2!1sen!2sin"
-        width="100%"
-        height="100%"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d462561.6574537445!2d55.22748795!3d25.076022449999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43496ad9c645%3A0xbde66e5084295162!2sDubai%20-%20United%20Arab%20Emirates!5e0!3m2!1sen!2sin!4v1733317998971!5m2!1sen!2sin"
+        allowfullscreen=""></iframe>
     </div>
-    <Footer />
-  </main>
+  </section>
+  <Footer />
 </Layout>
-<style>
-  @media (min-width: 1440px) {
-    .aboutp {
-      line-height: 5rem;
-    }
-  }
-</style>

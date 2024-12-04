@@ -28,14 +28,9 @@ const pathname = new URL(Astro.request.url).pathname.slice(1);
     />
     <SEO />
 
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.4.2/dist/cdn.min.js" defer></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
-    <!-- <ViewTransitions fallback="swap" /> -->
-    <!-- <script src="../scripts/gsap"></script> -->
-
     <!-- /* custom fonts */ -->
 
-    <AstroFont
+    <!-- <AstroFont
       config={[
         {
           src: [
@@ -81,64 +76,20 @@ const pathname = new URL(Astro.request.url).pathname.slice(1);
           fallback: 'serif',
         },
       ]}
-    />
-    <base href="/" />
+    /> -->
   </head>
 
   <body class="antialiased">
     <TwSizeIndicator />
-    <slot />
-
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
-    <script src="/js/custom.min.js" is:inline></script>
-    <script src="/js/Pannellum.js" is:inline></script>
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
-      integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
-      integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-
-    <!-- <script is:inline>
-      // Ensure that the DOM is fully loaded before executing the script
-      document.addEventListener('DOMContentLoaded', function () {
-        const lenis = new Lenis();
-
-        function raf(time) {
-          lenis.raf(time);
-          requestAnimationFrame(raf);
-        }
-
-        requestAnimationFrame(raf);
-      });
-    </script> -->
-
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.5.2/jquery-migrate.min.js"
-      integrity="sha512-BzvgYEoHXuphX+g7B/laemJGYFdrq4fTKEo+B3PurSxstMZtwu28FHkPKXu6dSBCzbUWqz/rMv755nUwhjQypw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"
-      integrity="sha512-HGOnQO9+SP1V92SrtZfjqxxtLmVzqZpjFFekvzZVWoiASSQgSr4cw9Kqd2+l8Llp4Gm0G8GIFJ4ddwZilcdb8A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"></script>
+    <div class="page-wrapper">
+      <slot />
+    </div>
+    <script is:inline src="/js/jquery.min.js"></script>
+    <script is:inline src="/js/bootstrap.bundle.min.js"></script>
+    <!-- Plugins for this template -->
+    <script is:inline src="/js/modernizr.custom.js"></script>
+    <script is:inline src="/js/jquery-plugin-collection.js"></script>
+    <!-- Custom script for this template -->
+    <script is:inline src="/js/script.js"></script>
   </body>
 </html>
