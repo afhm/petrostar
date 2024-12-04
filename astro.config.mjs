@@ -3,9 +3,7 @@ import robotsTxt from 'astro-robots-txt';
 import sitemap from 'astro-sitemap';
 import netlify from '@astrojs/netlify';
 import tailwind from '@astrojs/tailwind';
-import react from '@astrojs/react';
 
-import alpinejs from '@astrojs/alpinejs';
 
 // import swup from '@swup/astro';
 
@@ -25,15 +23,15 @@ export default defineConfig({
     }), (await import('astro-compress')).default({
         Image: false,
     }), // swup({
-    //   theme: 'fade', reloadScripts: false,
+        //   theme: 'fade', reloadScripts: false,
 
-    //   progress: true,
+        //   progress: true,
 
-    //   preload: {
-    //     hover: true,
-    //   }
-    // })
-    react(), alpinejs()],
+        //   preload: {
+        //     hover: true,
+        //   }
+        // })
+    ],
     output: "server",
     adapter: netlify({
         cacheOnDemandPages: true,
