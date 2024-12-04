@@ -1,9 +1,10 @@
 import { defineConfig } from 'astro/config';
 import robotsTxt from 'astro-robots-txt';
 import sitemap from 'astro-sitemap';
+import netlify from '@astrojs/netlify';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
-import vercel from '@astrojs/vercel/serverless';
+import vercelServerless from '@astrojs/vercel/serverless';
 // import icon from "astro-icon";
 
 // import swup from '@swup/astro';
@@ -41,7 +42,6 @@ export default defineConfig({
         // })
         react(),
     ],
-    output: 'server',
 
     image: {
         remotePatterns: [
@@ -52,18 +52,17 @@ export default defineConfig({
         domains: ['creativehive.auxcgen.com'],
     },
 
-    adapter: vercel({
+    output: 'server',
+    adapter: vercelServerless({
         maxDuration: 60,
         imageService: true,
-
+        isr: {
+            expiration: 3600,
+        },
         imagesConfig: {
-            sizes: [420, 640, 1280, 1920, 2048],
+            sizes: [420, 640, 1280, 1920],
             formats: ["image/avif"],
             domains: ["creativehive.auxcgen.com"],
         },
-        webAnalytics: {
-            enabled: true,
-        },
-        runtime: 'nodejs20.x'
     }),
 });
