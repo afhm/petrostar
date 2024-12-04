@@ -24,3 +24,10 @@ pnpm-debug.log*
 .idea/
 robots.txt
 .netlify
+
+bun.lockb
+
+
+.vercel
+.vercel/output
+.vercel/cache
