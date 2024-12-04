@@ -238,3 +238,13 @@
     letter-spacing: 1rem;
   }
 }
+
+/* debug check */
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #000;
+  border: 1px solid red;
+  outline: 1px solid greenyellow;
+} */
