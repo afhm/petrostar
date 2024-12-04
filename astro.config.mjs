@@ -1,9 +1,10 @@
 import { defineConfig } from 'astro/config';
 import robotsTxt from 'astro-robots-txt';
 import sitemap from 'astro-sitemap';
+import netlify from '@astrojs/netlify';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
-import vercel from '@astrojs/vercel';
+import vercelServerless from '@astrojs/vercel/serverless';
 // import icon from "astro-icon";
 
 // import swup from '@swup/astro';
@@ -16,7 +17,7 @@ export default defineConfig({
     // },
 
     // },
-    site: 'https://www.creative-hive.co',
+    site: 'https://www.petrostarinnovative.com',
 
     integrations: [
         robotsTxt(),
@@ -51,7 +52,9 @@ export default defineConfig({
         domains: ['creativehive.auxcgen.com'],
     },
 
-    adapter: vercel({
+    output: 'server',
+    adapter: vercelServerless({
+        maxDuration: 60,
         imageService: true,
         isr: {
             expiration: 3600,
