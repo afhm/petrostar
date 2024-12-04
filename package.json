@@ -61,5 +61,8 @@
     "stylelint-prettier": "^5.0.2",
     "tailwind-merge": "^2.5.3",
     "tailwindcss": "^3.4.0"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }
