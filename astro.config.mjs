@@ -64,5 +64,6 @@ export default defineConfig({
             formats: ["image/avif"],
             domains: ["creativehive.auxcgen.com"],
         },
+        runtime: 'nodejs20.x'
     }),
 });

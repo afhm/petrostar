@@ -7,7 +7,7 @@
       "runtime": "nodejs20.x"
     }
   },
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
+  "buildCommand": "bun run build",
+  "devCommand": "bun run dev",
   "framework": "astro"
 }
