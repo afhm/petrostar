@@ -3,7 +3,7 @@ import robotsTxt from 'astro-robots-txt';
 import sitemap from 'astro-sitemap';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
-import vercel from "@astrojs/vercel"
+import vercel from '@astrojs/vercel/serverless';
 // import icon from "astro-icon";
 
 // import swup from '@swup/astro';
@@ -41,6 +41,7 @@ export default defineConfig({
         // })
         react(),
     ],
+    output: 'server',
 
     image: {
         remotePatterns: [
@@ -60,5 +61,9 @@ export default defineConfig({
             formats: ["image/avif"],
             domains: ["creativehive.auxcgen.com"],
         },
+        webAnalytics: {
+            enabled: true,
+        },
+        runtime: 'nodejs20.x'
     }),
 });
