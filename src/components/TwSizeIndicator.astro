@@ -1,0 +1,19 @@
+---
+
+---
+
+{
+  process.env.NODE_ENV === 'development' && (
+    <div class="bg-gray-200 fixed left-0 top-0 z-50 flex w-[20px] md:w-[40px] items-center justify-center py-[2.5px] font16 uppercase text-black xs:bg-red-200 sm:bg-orange-200 md:bg-yellow-200 lg:bg-green-200 xl:bg-violet-200 2lg:bg-blue-200 3lg:bg-indigo-200 2xl:bg-pink-200">
+      <span class="block xs:hidden">base</span>
+      <span class="hidden xs:block sm:hidden">xs</span>
+      <span class="hidden sm:block md:hidden">sm</span>
+      <span class="hidden md:block lg:hidden">md</span>
+      <span class="hidden lg:block 2lg:hidden">lg</span>
+      <span class="hidden 2lg:block 3lg:hidden">2lg</span>
+      <span class="hidden 3lg:block hd:hidden">3lg</span>
+      <span class="hidden hd:block 2k:hidden">hd</span>
+      <span class="hidden 2k:block">2k</span>
+    </div>
+  )
+}

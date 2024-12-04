@@ -1,0 +1,178 @@
+---
+import ImageComp from './ImageComp.astro';
+
+// Fetch projects from WordPress API
+const response = await fetch('https://northernsky.auxcgen.com/wp-json/wp/v2/project');
+const projects = await response.json();
+
+// Transform WordPress data to match component structure
+const transformedProjects = projects.map((project) => ({
+  name: project.title.rendered,
+  location: project.meta_box.location,
+  // Use the first image from portfolio_media if available, otherwise use a placeholder
+  image: project.meta_box.portfolio_media?.[0]?.url || '/placeholder-image.jpg',
+  // Map WordPress project type to category
+  category: project.meta_box.projecttype?.slug || 'all',
+  menu_order: project.menu_order || 0,
+}));
+
+// Sort projects by menu_order
+transformedProjects.sort((a, b) => a.menu_order - b.menu_order);
+
+// Get unique categories for filter buttons
+const categories = ['All Projects', ...new Set(transformedProjects.map((p) => p.category))];
+
+// Add a check for the current path
+const isProjectPage = Astro.url.pathname.includes('/project/');
+---
+
+<section class="min-h-[50rem] bg-darkColor text-white">
+  <div class="containerw flex w-full">
+    <div class="font32 min-h-[50rem] w-[10em] border border-y-0 border-s-0 border-[#16629185] pt-32">
+      <ul class="grid grid-cols-1 gap-y-16">
+        {
+          categories.map((category) => (
+            <li class={`project-item ${category === 'all' ? 'active' : ''}`} data-filter={category}>
+              <a href="#" class="flex items-center">
+                <span class="h-full">{category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ')}</span>
+                <span class="arrow h-[1em] w-[1.4em]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24">
+                    <path
+                      fill="none"
+                      stroke="white"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3 12.013L20.789 12m-6.776 7L21 12l-6.988-7"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div
+      class="project-cards grid h-full w-full grid-cols-2 gap-x-[4rem] gap-y-[3.2rem] p-20 pr-0 2lg:grid-cols-3 hd:gap-[7rem]"
+    >
+      {
+        transformedProjects.map((project) => (
+          <a
+            href={`/project/${project.name.replace(/\s+/g, '-').toLowerCase()}`}
+            class="project-card w-full rounded-xl bg-[#0E3B57] text-white"
+            data-category={project.category}
+          >
+            <ImageComp
+              imagePath={project.image}
+              altText="image"
+              className="h-[17.5rem] hd:h-80 w-full rounded-xl object-fill bg-[#2779ab]"
+            />
+            <div class="px-11 py-10">
+              <h3 class="font20 font-semibold">{project.name}</h3>
+              <p class="font12 pt-2">{project.location}</p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .project-item a {
+    transition: font-weight 0.1s ease;
+  }
+  .project-item:hover a,
+  .project-item.active a {
+    @apply font-semibold;
+  }
+  .arrow {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .project-item:hover .arrow,
+  .project-item.active .arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+</style>
+<script>
+  const projectItems = document.querySelectorAll('.project-item');
+  const projectCards = document.querySelectorAll('.project-card');
+  const header = document.querySelector('header');
+  const headerLinks = header?.querySelectorAll('a');
+  const headerSvgs = header?.querySelectorAll('svg path');
+
+  projectItems.forEach((item) => {
+    item.addEventListener('mouseenter', () => {
+      const filter = item.getAttribute('data-filter');
+      filterProjects(filter);
+      setActiveItem(item);
+      // Add header style changes
+      // if (header) {
+      //   header.style.backgroundColor = 'white';
+      //   // Change header text color
+      //   header.style.color = '#053451';
+      //   // Change header link colors
+      //   headerLinks?.forEach((link) => {
+      //     link.style.color = '#053451';
+      //   });
+      //   // Change SVG colors
+      //   headerSvgs?.forEach((path) => {
+      //     if (path.getAttribute('stroke')) {
+      //       path.setAttribute('stroke', '#053451');
+      //     }
+      //   });
+      // }
+    });
+
+    // Reset header styles when mouse leaves the projects menu
+    document.querySelector('.containerw')?.addEventListener('mouseleave', () => {
+      if (header) {
+        header.style.backgroundColor = '';
+        header.style.color = '';
+        // Reset header link colors
+        headerLinks?.forEach((link) => {
+          link.style.color = '';
+        });
+        // Reset SVG colors
+        headerSvgs?.forEach((path) => {
+          if (path.getAttribute('stroke')) {
+            path.setAttribute('stroke', 'white');
+          }
+        });
+      }
+    });
+
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      const filter = item.getAttribute('data-filter');
+      filterProjects(filter);
+      setActiveItem(item);
+    });
+  });
+
+  function filterProjects(filter) {
+    projectCards.forEach((card) => {
+      if (filter === 'All Projects' || card.getAttribute('data-category') === filter) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  function setActiveItem(activeItem) {
+    projectItems.forEach((item) => {
+      item.classList.remove('active');
+    });
+    activeItem.classList.add('active');
+  }
+
+  // Initialize with "All Projects" selected
+  filterProjects('All Projects');
+</script>

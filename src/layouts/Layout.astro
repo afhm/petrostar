@@ -1,0 +1,144 @@
+---
+import '../styles/all.css';
+import { AstroFont } from 'astro-font';
+import TwSizeIndicator from '@components/TwSizeIndicator.astro';
+import SEO from '@components/SEO.astro';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  siteName?: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: string;
+  twitterHandle?: string;
+  slug?: string;
+}
+
+// set sitename based on pathname
+const pathname = new URL(Astro.request.url).pathname.slice(1);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
+    />
+    <SEO />
+
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.4.2/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+    <!-- <ViewTransitions fallback="swap" /> -->
+    <!-- <script src="../scripts/gsap"></script> -->
+
+    <!-- /* custom fonts */ -->
+
+    <AstroFont
+      config={[
+        {
+          src: [
+            {
+              path: '/fonts/Gilroy-Regular.woff2',
+              weight: '400',
+              style: 'normal',
+            },
+            {
+              path: '/fonts/Gilroy-Medium.woff2',
+              weight: '500',
+              style: 'normal',
+            },
+            {
+              path: '/fonts/Gilroy-SemiBold.woff2',
+              weight: '600',
+              style: 'normal',
+            },
+          ],
+          name: 'Gilroy',
+          preload: true,
+          display: 'swap',
+          selector: 'body',
+          fallback: 'sans-serif',
+        },
+        {
+          src: [
+            {
+              path: '/fonts/PlayfairDisplay.woff2',
+              weight: '700',
+              style: 'normal',
+            },
+            {
+              path: '/fonts/PlayfairDisplayitalic.woff2',
+              weight: '600',
+              style: 'italic',
+            },
+          ],
+          name: 'Playfair Display',
+          preload: true,
+          display: 'swap',
+          selector: '.font-playfair, .font-playfair-italic',
+          fallback: 'serif',
+        },
+      ]}
+    />
+    <base href="/" />
+  </head>
+
+  <body class="antialiased">
+    <TwSizeIndicator />
+    <slot />
+
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+    <script src="/js/custom.min.js" is:inline></script>
+    <script src="/js/Pannellum.js" is:inline></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
+      integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
+      integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- <script is:inline>
+      // Ensure that the DOM is fully loaded before executing the script
+      document.addEventListener('DOMContentLoaded', function () {
+        const lenis = new Lenis();
+
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+      });
+    </script> -->
+
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.5.2/jquery-migrate.min.js"
+      integrity="sha512-BzvgYEoHXuphX+g7B/laemJGYFdrq4fTKEo+B3PurSxstMZtwu28FHkPKXu6dSBCzbUWqz/rMv755nUwhjQypw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"></script>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"
+      integrity="sha512-HGOnQO9+SP1V92SrtZfjqxxtLmVzqZpjFFekvzZVWoiASSQgSr4cw9Kqd2+l8Llp4Gm0G8GIFJ4ddwZilcdb8A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"></script>
+  </body>
+</html>

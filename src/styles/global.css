@@ -1,0 +1,367 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .visible {
+    visibility: visible;
+  }
+  .invisible {
+    visibility: hidden;
+  }
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html {
+    font-size: 62.5%;
+    @apply text-darkgray;
+  }
+}
+
+:root {
+  --color-primary: #053451; /* Dark Blue */
+  --color-secondary: #d1dfe9; /* Light Blue */
+  --color-tertiary: #eaeff3; /* Very Light Blue */
+  --color-white: #ffffff; /* White */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+/* *::-webkit-scrollbar {
+  display: none;
+} */
+
+/* FONT SIZE CLAMP STARTS FROM MOBILE DEVICE (360px) */
+.font8 {
+  /* font-size: clamp(0.8rem, 0.636rem + 0.455vw, 1.8rem); */
+  font-size: clamp(0.8rem, 0.735rem + 0.182vw, 1.2rem);
+}
+.font10 {
+  /* font-size: clamp(0.7rem, 0.622rem + 0.179vw, 1rem); */
+  /* font-size: clamp(1rem, 0.836rem + 0.455vw, 2rem); */
+  font-size: clamp(1rem, 0.787rem + 0.591vw, 2.3rem);
+}
+.font12 {
+  /* font-size: clamp(0.85rem, 0.765rem + 0.362vw, 1.2rem); */
+  font-size: clamp(1.2rem, 1.085rem + 0.318vw, 1.9rem);
+}
+.font13 {
+  font-size: clamp(1rem, 0.893rem + 0.179vw, 1.3rem);
+}
+.font14 {
+  /* font-size: clamp(0.9rem, 0.827rem + 0.311vw, 1.4rem); */
+  font-size: clamp(1.4rem, 1.269rem + 0.364vw, 2.2rem);
+}
+.font15 {
+  font-size: clamp(1.3rem, 1.251rem + 0.207vw, 1.5rem);
+}
+.font16 {
+  font-size: clamp(1.2rem, 1.117rem + 0.215vw, 1.6rem);
+}
+.font17 {
+  font-size: clamp(1.3rem, 1.203rem + 0.414vw, 1.7rem);
+}
+.font18 {
+  font-size: clamp(1.35rem, 1.241rem + 0.466vw, 1.8rem);
+}
+.font20 {
+  font-size: clamp(1rem, 0.769rem + 1.026vw, 2rem);
+}
+.font22 {
+  font-size: clamp(1.45rem, 1.277rem + 0.769vw, 2.2rem);
+}
+.font24 {
+  font-size: clamp(0.9rem, 0.554rem + 1.538vw, 2.4rem);
+}
+.font25 {
+  font-size: clamp(1.45rem, 1.195rem + 1.087vw, 2.5rem);
+}
+.font26 {
+  font-size: clamp(1.9rem, 1.73rem + 0.725vw, 2.6rem);
+}
+.font32 {
+  font-size: clamp(2.1rem, 1.833rem + 1.139vw, 3.2rem);
+}
+.font36 {
+  font-size: clamp(2.4rem, 2.109rem + 1.243vw, 3.6rem);
+}
+.font37 {
+  font-size: clamp(2.25rem, 1.898rem + 1.502vw, 3.7rem);
+}
+
+.font40 {
+  font-size: clamp(2.9rem, 2.633rem + 1.139vw, 4rem);
+}
+.font42 {
+  font-size: clamp(2.2rem, 1.715rem + 2.071vw, 4.2rem);
+}
+.font45 {
+  font-size: clamp(2.3rem, 1.766rem + 2.278vw, 4.5rem);
+}
+.font50 {
+  font-size: clamp(2.9rem, 2.39rem + 2.175vw, 5rem);
+}
+.font52 {
+  font-size: clamp(2.6rem, 1.969rem + 2.693vw, 5.2rem);
+}
+.font60 {
+  font-size: clamp(2.75rem, 1.961rem + 3.366vw, 6rem);
+}
+
+.abouth2 {
+  font-size: clamp(1.8rem, 1.276rem + 1.455vw, 5rem);
+}
+.aboutp {
+  font-size: clamp(1.4rem, 1.007rem + 1.091vw, 3.8rem);
+}
+
+.aboutbtn {
+  font-size: clamp(1.4rem, 0.909rem + 1.364vw, 4.4rem);
+}
+
+/* 1280 to 2560 responsive font */
+.fontHeader {
+  font-size: clamp(1.6rem, 1.3rem + 0.244vw, 1.8rem);
+  font-weight: 400;
+}
+
+.fontContact {
+  font-size: clamp(4rem, 2.036rem + 5.455vw, 16rem);
+  font-weight: 600;
+}
+
+.fontContactBg {
+  font-size: clamp(10rem, 25vw, 50rem);
+  color: rgba(93, 126, 162, 0.4);
+}
+
+.projectheadtext {
+  font-size: clamp(1rem, 0.885rem + 0.318vw, 1.7rem);
+}
+
+.custom-text {
+  @apply tracking-[0.05rem];
+}
+.active-link {
+  @apply border-b border-brown;
+}
+
+.pink-grad {
+  background: linear-gradient(82.93deg, #8341b6 4.01%, #ff63c5 95.99%);
+}
+
+/* All sections gapping and responsive font size declared here */
+@screen xs {
+  /* Styles for 375px and up */
+  /* Add any specific styles for 375px if needed */
+  .section-x-gap {
+    @apply mx-[2.2rem];
+  }
+  .containerw {
+    @apply px-[2.7rem];
+  }
+}
+
+@screen sm {
+  /* Styles for 414px and up */
+  .section-x-gap {
+    @apply mx-[1.9rem];
+  }
+  .containerw {
+    @apply px-[2.6rem];
+  }
+}
+
+@screen md {
+  /* Styles for 768px and up */
+  /* ALL fONT SIZES INCREASED BY 0.2rem units */
+  .section-x-gap {
+    @apply mx-[2rem];
+  }
+  .containerw {
+    @apply px-8;
+  }
+}
+
+@screen lg {
+  /* Styles for 1024px and up */
+  /* .section-x-gap {
+    @apply mx-[3rem]    
+  } */
+  .section-x-gap {
+    @apply mx-0;
+  }
+  .containerw {
+    @apply px-16;
+  }
+}
+
+@screen 2lg {
+  /* Styles for 1024px and up */
+  /* .section-x-gap {
+    @apply mx-[3rem]    
+  } */
+  .section-x-gap {
+    @apply mx-0;
+  }
+  .containerw {
+    @apply max-w-[1400px] px-[9.2rem];
+  }
+  .fontContact {
+    font-size: clamp(8rem, 8vw, 18rem);
+  }
+  .fontContactBg {
+    font-size: clamp(25rem, 35vw, 55rem);
+  }
+}
+
+@screen 3lg {
+  /* Styles for 1024px and up */
+  /* .section-x-gap {
+    @apply mx-[3rem]    
+  } */
+  .section-x-gap {
+    @apply mx-0;
+  }
+  .containerw {
+    @apply mx-auto max-w-[1600px] px-[9.5rem];
+  }
+  .fontContact {
+    font-size: clamp(10rem, 10vw, 20rem);
+  }
+  .fontContactBg {
+    font-size: clamp(25rem, 35vw, 70rem);
+    letter-spacing: 1rem;
+  }
+}
+
+/* guidelines */
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* background: #0000000e; 
+  border: 1px solid red;
+  outline: 1px solid greenyellow;
+}*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: white;
+  width: 100dvw;
+  overflow-x: hidden;
+  height: 100%;
+  border-color: #3b3b3b;
+  user-select: none;
+}
+
+canvas {
+  touch-action: none;
+}
+
+.screen-max-width {
+  margin: 0 auto;
+  position: relative;
+  max-width: 1120px;
+}
+
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
+.nav-height {
+  @apply h-[calc(100vh-60px)];
+}
+
+.btn {
+  @apply my-5 rounded-3xl border border-transparent bg-blue-600 px-5 py-2 hover:border hover:border-blue-600 hover:bg-transparent hover:text-blue-600;
+}
+
+.color-container {
+  @apply flex items-center justify-center rounded-full bg-gray px-4 py-4 backdrop-blur;
+}
+
+.size-btn-container {
+  @apply ml-3 flex items-center justify-center gap-1 rounded-full bg-gray p-1 backdrop-blur;
+}
+
+.size-btn {
+  @apply flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm text-black transition-all;
+}
+
+/* .common-padding {
+  @apply px-5 py-20 sm:px-10 sm:py-32;
+} */
+
+.section-heading {
+  @apply mb-5 translate-y-20 text-3xl font-medium text-gray opacity-0 md:text-5xl lg:mb-0 lg:text-6xl;
+}
+
+.feature-text {
+  @apply max-w-md translate-y-[100px] text-lg font-semibold text-gray opacity-0 md:text-xl;
+}
+
+.feature-text-container {
+  @apply flex-center mt-10 w-full flex-col gap-5 md:mt-16 md:flex-row;
+}
+
+.feature-video {
+  @apply h-full w-full scale-150 object-cover object-center opacity-0;
+}
+
+.feature-video-container {
+  @apply flex w-full flex-col items-center gap-5 md:flex-row;
+}
+
+.link {
+  @apply flex translate-y-20 cursor-pointer items-center text-xl text-blue-600 opacity-0 hover:underline;
+}
+
+.control-btn {
+  @apply flex-center mr-4 rounded-full bg-white/10 p-[1px] backdrop-blur;
+}
+
+.hero-title {
+  @apply text-center text-3xl font-semibold text-gray opacity-0 max-md:mb-10;
+}
+
+.hiw-title {
+  @apply text-center text-4xl font-semibold md:text-7xl;
+}
+
+.hiw-subtitle {
+  @apply py-10 text-center text-xl font-semibold text-gray md:text-2xl;
+}
+
+.hiw-video {
+  @apply absolute h-[90%] w-[95%] overflow-hidden rounded-[56px];
+}
+
+.hiw-text-container {
+  @apply flex flex-col items-start justify-between gap-24 md:flex-row;
+}
+
+.hiw-text {
+  @apply text-xl font-normal text-gray md:font-semibold;
+}
+
+.hiw-bigtext {
+  @apply my-2 text-3xl font-normal text-white md:text-5xl md:font-semibold;
+}
+
+.video-carousel_container {
+  @apply relative w-[100vw] sm:w-[100vw] md:h-[100%];
+}
+
+.g_fadeIn {
+  @apply translate-y-[100px] opacity-0;
+}

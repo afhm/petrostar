@@ -1,0 +1,258 @@
+---
+const floorPlanTabs = [
+  { id: 'lower-type-1', label: 'Lower Type 1', active: true },
+  { id: 'upper-type-1', label: 'Upper Type 1', active: false },
+  { id: 'upper-type-2', label: 'Upper Type 2', active: false },
+  { id: 'lower-duplex', label: 'Lower Duplex & Combined', active: false },
+  { id: 'upper-duplex', label: 'Upper Duplex & Combined', active: false },
+];
+---
+
+<div class="floor-plans-container py-8 md:py-[55px] lg:py-[55px] 3lg:py-[75px]">
+  <h2 class="text-center font32 lg:tracking-[0.7rem] 3lg:tracking-[0.9rem] text-darkColor font-semibold mb-8 lg:mb-[55px] 3lg:mb-[80px] text-[4.5rem]">FLOOR PLANS</h2>
+  
+  <!-- Tabs -->
+  <div class="containerw mb-6 md:mb-10 px-4 md:px-0">
+    <div class="flex flex-col md:flex-row md:justify-between md:mx-[5rem] lg:mx-[12rem] 2lg:mx-[24rem] 3lg:mx-[17rem] border-b-[0.5px] border-gray/20">
+      {floorPlanTabs.map(tab => (
+        <button
+          class:list={[
+            'tab-button py-2 rounded-md transition-colors tracking-wide tabs-text pb-4 md:pb-6 whitespace-nowrap',
+            'mb-2 md:mb-0',
+            tab.active 
+              ? 'text-[#053451] border-b-[6px] border-[#84ABC3] font-semibold' 
+              : 'text-[#999999] hover:text-[#053451]'
+          ]}
+          data-tab={tab.id}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Floor Plan Images -->
+  <div class="floor-plan-content containerw px-4 md:px-0">
+    <div class="border-l-[1px] lg:mx-[13.5rem] border-t-[1px] border-gray/50">
+        <div class="tab-content active" id="lower-type-1">
+          <img 
+            src="/images/floor-plans/lower-type-1.jpg" 
+            alt="Lower Type 1 Floor Plan"
+            class="max-w-full 3lg:max-w-[90%] h-auto mx-auto object-contain"
+          />
+        </div>
+        <div class="tab-content" id="upper-type-1">
+          <img 
+            src="/images/floor-plans/upper-type-1.jpg"
+            alt="Upper Type 1 Floor Plan"
+            class="w-full 3lg:max-w-[90%] h-auto mx-auto object-contain"
+          />
+        </div>
+        <div class="tab-content" id="upper-type-2">
+          <img 
+            src="/images/floor-plans/upper-type-2.jpg"
+            alt="Upper Type 2 Floor Plan"
+            class="w-full 3lg:max-w-[90%] h-auto mx-auto object-contain"
+          />
+        </div>
+        <div class="tab-content" id="lower-duplex">
+          <img 
+            src="/images/floor-plans/lower-type-duplex.jpg"
+            alt="Lower Duplex & Combined Floor Plan"
+            class="w-full 3lg:max-w-[90%] h-auto mx-auto object-contain"
+          />
+        </div>
+        <div class="tab-content" id="upper-duplex">
+          <img 
+            src="/images/floor-plans/upper-type-duplex.jpg"
+            alt="Upper Duplex & Combined Floor Plan"
+            class="w-full md:max-w-[88%] h-auto mx-auto object-contain"
+          />
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add this modal markup right after your floor-plans-container div -->
+<div id="imageModal" class="fixed inset-0 z-50 hidden bg-black/80">
+  <div class="relative w-full h-full flex items-center justify-center p-4">
+    <div class="absolute top-4 right-4 flex gap-2">
+      <button class="modal-btn" id="zoomInBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+        </svg>
+      </button>
+      <button class="modal-btn" id="zoomOutBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM7 10h6" />
+        </svg>
+      </button>
+      <button class="modal-btn" id="fullscreenBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-2V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+        </svg>
+      </button>
+      <a class="modal-btn" id="downloadBtn" download>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+      </a>
+      <button class="modal-btn" id="closeBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <img id="modalImage" class="max-h-[90vh] max-w-[90vw] object-contain transition-transform duration-200" src="" alt="">
+  </div>
+</div>
+
+<style>
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .tab-button {
+      width: 100%;
+      text-align: left;
+      border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+    }
+    
+    .tab-button:last-child {
+      border-bottom: none;
+    }
+  }
+  
+  .modal-btn {
+    @apply p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors;
+  }
+  
+  #modalImage {
+    cursor: grab;
+  }
+  
+  #modalImage:active {
+    cursor: grabbing;
+  }
+
+  .tabs-text {
+    font-size: clamp(1.3rem, 0.043rem + 1.228vw, 2.4rem);
+  }
+</style>
+
+<script>
+  // Update the tab switching functionality
+  const tabButtons = document.querySelectorAll('.tab-button');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove active classes from all buttons and contents
+      tabButtons.forEach(btn => {
+        btn.classList.remove('text-[#053451]', 'font-semibold', 'border-b-[6px]', 'border-[#84ABC3]');
+        btn.classList.add('text-[#999999]'); // Add inactive text color
+      });
+      tabContents.forEach(content => content.classList.remove('active'));
+
+      // Add active classes to clicked button and corresponding content
+      button.classList.remove('text-[#999999]'); // Remove inactive text color
+      button.classList.add('text-[#053451]', 'font-semibold', 'border-b-[6px]', 'border-[#84ABC3]');
+      const tabId = button.getAttribute('data-tab');
+      document.getElementById(tabId)?.classList.add('active');
+    });
+  });
+
+  // Image popup functionality
+  const modal = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImage');
+  const closeBtn = document.getElementById('closeBtn');
+  const zoomInBtn = document.getElementById('zoomInBtn');
+  const zoomOutBtn = document.getElementById('zoomOutBtn');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  
+  let scale = 1;
+  let isDragging = false;
+  let startPos = { x: 0, y: 0 };
+  let currentPos = { x: 0, y: 0 };
+
+  // Add click handlers to all floor plan images
+  document.querySelectorAll('.tab-content img').forEach(img => {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+      modalImg.src = img.src;
+      downloadBtn.href = img.src;
+      scale = 1;
+      currentPos = { x: 0, y: 0 };
+      updateImageTransform();
+    });
+  });
+
+  closeBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+  });
+
+  zoomInBtn.addEventListener('click', () => {
+    scale = Math.min(scale * 1.2, 5);
+    updateImageTransform();
+  });
+
+  zoomOutBtn.addEventListener('click', () => {
+    scale = Math.max(scale / 1.2, 1);
+    updateImageTransform();
+  });
+
+  fullscreenBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      modal.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  });
+
+  // Drag functionality
+  modalImg.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startPos = {
+      x: e.clientX - currentPos.x,
+      y: e.clientY - currentPos.y
+    };
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    currentPos = {
+      x: e.clientX - startPos.x,
+      y: e.clientY - startPos.y
+    };
+    updateImageTransform();
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  // Close on backdrop click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.add('hidden');
+    }
+  });
+
+  // Update image transform
+  function updateImageTransform() {
+    modalImg.style.transform = `translate(${currentPos.x}px, ${currentPos.y}px) scale(${scale})`;
+  }
+
+  // Handle escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      modal.classList.add('hidden');
+    }
+  });
+</script>

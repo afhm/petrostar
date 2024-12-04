@@ -1,0 +1,140 @@
+---
+import { parse } from 'node-html-parser';
+
+// Constants moved outside component for single initialization
+const DEFAULT_TITLE = 'Emdak Studios';
+const DEFAULT_DESCRIPTION = 'Creative Infographics Redefined';
+const BASE_URL = 'https://northernsky.in';
+const API_BASE_URL = 'https://northernsky.auxcgen.com';
+
+// Pre-define processed meta tags set
+const PROCESSED_META_TAGS = new Set([
+  'description',
+  'og:title',
+  'og:description',
+  'og:image',
+  'og:type',
+  'og:site_name',
+  'og:url',
+  'twitter:card',
+  'twitter:title',
+  'twitter:description',
+  'twitter:image',
+]);
+
+// Optimized URL processing
+function getCanonicalUrl(pathname: string): string {
+  const url = new URL(pathname, BASE_URL);
+  return url.href.endsWith('/') ? url.href.slice(0, -1) : url.href;
+}
+
+// Efficient meta tag content extraction
+function getMetaContent(doc: any, property: string): string {
+  const selectors = [`meta[property="${property}"]`, `meta[name="${property}"]`];
+  for (const selector of selectors) {
+    const tag = doc.querySelector(selector);
+    if (tag) {
+      return tag.getAttribute('content') || '';
+    }
+  }
+  return '';
+}
+
+// Optimized JSON-LD processing
+function processJsonLd(content: string): string | null {
+  try {
+    return JSON.stringify(JSON.parse(content).replace(new RegExp(API_BASE_URL, 'g'), BASE_URL));
+  } catch {
+    return null;
+  }
+}
+
+// Efficient meta props creation
+function createMetaProps(tag: any): Record<string, string> {
+  return Object.fromEntries(Object.entries(tag.attributes).filter(([_, value]) => value));
+}
+
+// Main SEO data fetching function with caching
+async function getSeoData(url: string) {
+  const cacheKey = url;
+  const now = Date.now();
+
+  try {
+    const apiUrl = `${API_BASE_URL}/wp-json/rankmath/v1/getHead?url=${url.replace(BASE_URL, API_BASE_URL)}`;
+    const response = await fetch(apiUrl, {
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+
+    if (!response.ok) throw new Error('API fetch failed');
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('SEO data fetch error:', error);
+    return {
+      head: `
+        <title>${DEFAULT_TITLE}</title>
+        <meta name="description" content="${DEFAULT_DESCRIPTION}">
+      `,
+    };
+  }
+}
+
+// Main component logic
+const canonicalUrl = getCanonicalUrl(Astro.url.pathname);
+const seoData = await getSeoData(canonicalUrl);
+const headContent = parse(seoData.head);
+
+// Extract SEO data efficiently
+const title = getMetaContent(headContent, 'og:title') || headContent.querySelector('title')?.text || DEFAULT_TITLE;
+
+const description =
+  getMetaContent(headContent, 'description') || getMetaContent(headContent, 'og:description') || DEFAULT_DESCRIPTION;
+
+const ogImage = getMetaContent(headContent, 'og:image');
+const ogType = getMetaContent(headContent, 'og:type') || 'website';
+const ogSiteName = getMetaContent(headContent, 'og:site_name') || DEFAULT_TITLE;
+const twitterCard = getMetaContent(headContent, 'twitter:card') || 'summary_large_image';
+
+const jsonLdScript = headContent.querySelector('script[type="application/ld+json"]');
+const processedJsonLd = jsonLdScript ? processJsonLd(jsonLdScript.textContent) : null;
+
+// Get additional meta tags efficiently
+const additionalMetaTags = headContent
+  .querySelectorAll('meta')
+  .filter((tag) => {
+    const identifier = tag.getAttribute('name') || tag.getAttribute('property');
+    return identifier && !PROCESSED_META_TAGS.has(identifier);
+  })
+  .map((tag) => createMetaProps(tag));
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="description" content={description} />
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{ogImage && <meta property="og:image" content={ogImage} />}
+<meta property="og:site_name" content={ogSiteName} />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content={twitterCard} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{ogImage && <meta name="twitter:image" content={ogImage} />}
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Additional Meta Tags -->
+{additionalMetaTags.map((props) => <meta {...props} />)}
+
+<!-- JSON-LD -->
+{processedJsonLd && <script type="application/ld+json" set:html={processedJsonLd} />}

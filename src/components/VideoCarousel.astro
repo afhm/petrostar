@@ -1,0 +1,275 @@
+---
+// Import statements
+import { hightlightsSlides } from "../constants";
+import { pauseImg, playImg, replayImg } from "../utils";
+
+---
+
+<section class="">
+  <div class="flex items-center h-full w-full transition-colors duration-700" id="carouselContainer">
+    {
+      hightlightsSlides.map((list, i) => (
+        <div data-id={list.id} class="w-full h-full py-10 md:py-20">
+          <div class="w-[80vw] mb-10 mx-auto h-full">
+         <div>
+          <h2 class="font22 tracking-[5px] font-medium text-white">KEY AMENITIES</h2>
+          <div class="w-full h-[1px] bg-white/20 my-5"></div>
+         </div>
+         <div class="flex gap-10 items-center">
+          <h4 class="text-[70px] leading-none text-white/40 font-normal slideNumber">01</h4>
+          <div>
+          <h4 class="font26 leading-[2.2rem] font-playfair slideFirstLine">Luxury Swimming Pool</h4>
+          <p class="max-w-[30rem] tracking-tight leading-[3.2rem] font-playfair font26 slideSecondLine"> for <span class="font-playfair-italic font-[100] font24 spanText">Ultimate Relaxation</span></p>
+          </div>
+         </div>
+          </div>
+          <div id="slider" class="video-carousel_container overflow-hidden">
+            <div class="w-[80vw] mx-auto h-[58dvh] relative object-cover flex-center rounded-2xl overflow-hidden bg-black">
+              <video
+                class:list={[
+                  'pointer-events-none absolute left-0 top-0 w-full h-full object-cover rounded-2xl',
+                  { '': list.id === 2 }
+                ]}
+                id={`video-${list.id}`}
+                playsinline
+                preload="auto"
+                muted
+              >
+                <source src={list.video} type="video/mp4" />
+              </video>
+            </div>
+          </div>
+      <div class="relative flex-center mt-16">
+        <button class="control-btn" id="controlBtn">
+          <img
+            src={playImg}
+            alt="play"
+            id="controlBtnImg"
+            class="w-16 h-16"
+          />
+        </button>
+        <div class="flex-center py-7 px-5 bg-white/10 backdrop-blur-md rounded-full">
+          {
+            hightlightsSlides.map((_, i) => (
+              <span
+                class={`mx-2 ${i === 0 ? 'w-16' : 'w-3'} h-3 bg-white/20 rounded-full relative cursor-pointer overflow-hidden`}
+                data-index={i}
+              >
+                <span
+                  class={`progress-indicator-${i + 1} absolute left-0 h-full w-full bg-white/60 rounded-full transform origin-left scale-x-0`}
+                />
+              </span>
+            ))
+          }
+        </div>
+      </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+<script>
+  import gsap from 'gsap';
+  import { pauseImg, playImg, replayImg } from "../utils";
+
+  let video = {
+    isEnd: false,
+    startPlay: false,
+    videoId: 0,
+    isLastVideo: false,
+    isPlaying: false,
+  };
+
+  // Get all video elements
+  const videos = document.querySelectorAll('video');
+  const controlBtn = document.getElementById('controlBtn');
+  const controlBtnImg = document.getElementById('controlBtnImg');
+  const progressIndicators = document.querySelectorAll('.rounded-full[data-index]');
+
+  // Add background colors array
+  const bgColors = ['#84ABC3', '#A48F7F', '#76999B', '#99A277'];
+  const textData = [
+    {
+    slideNumber: '01',
+    slideFirstLine: 'Luxury Swimming Pool',
+    slideSecondLine: 'for',
+    spanText: 'Ultimate Relaxation',
+    },
+    {
+      slideNumber: '02',
+      slideFirstLine: 'State-of-the-Art Outdoor Gym',
+      slideSecondLine: 'for a',
+      spanText: 'Refreshing Workout',
+    },
+    {
+      slideNumber: '03',
+      slideFirstLine: 'A Fun-Filled Play Area',
+      slideSecondLine: 'for ',
+      spanText: 'Your Little Ones',
+    },
+    {
+      slideNumber: '04',
+      slideFirstLine: 'A Pet Park for',
+      slideSecondLine: 'Endless',
+      spanText: 'Fun and Freedom',
+    }
+  ]
+  
+  function updateBackgroundColor(index: number) {
+    const container = document.getElementById('carouselContainer');
+    if (container) {
+      container.style.backgroundColor = bgColors[index];
+    }
+  }
+
+  function updateTextContent(index: number) {
+    const slideNumber = document.querySelector('.slideNumber');
+    const slideFirstLine = document.querySelector('.slideFirstLine');
+    const slideSecondLine = document.querySelector('.slideSecondLine');
+    const spanText = document.querySelector('.spanText');
+
+    if (slideNumber && slideFirstLine && slideSecondLine && spanText) {
+      slideNumber.innerHTML = textData[index].slideNumber;
+      slideFirstLine.innerHTML = textData[index].slideFirstLine;
+      slideSecondLine.innerHTML = `${textData[index].slideSecondLine} <span class="font-playfair-italic font-[100] font24 spanText">${textData[index].spanText}</span>`;
+    }
+  }
+
+  // Update progress indicators when video ID changes
+  function updateProgressIndicators() {
+    progressIndicators.forEach((ind, i) => {
+      ind.className = `mx-2 ${i === video.videoId ? 'w-16' : 'w-3'} h-3 bg-white/20 rounded-full relative cursor-pointer overflow-hidden`;
+    });
+  }
+
+  function updateProgressBar(videoElement: HTMLVideoElement, progressBar: Element | null, indicatorIndex: number) {
+    const progress = (videoElement.currentTime / videoElement.duration) * 100;
+    gsap.to(`.progress-indicator-${indicatorIndex}`, {
+      scaleX: progress / 100,
+      duration: 0.15,
+      ease: "power2.out",
+    });
+  }
+
+  function playNextVideo() {
+    if (video.videoId < videos.length - 1) {
+      videos[video.videoId].pause();
+      video.videoId++;
+      gsap.to("#slider", {
+        transform: `translateX(${-100 * video.videoId}%)`,
+        duration: 2, // This is the slider transition speed (2 seconds)
+        ease: "power2.inOut",
+      });
+      updateProgressIndicators();
+      updateBackgroundColor(video.videoId);
+      updateTextContent(video.videoId);
+      playVideo(videos[video.videoId]);
+    } else {
+      video.isLastVideo = true;
+      if (controlBtnImg instanceof HTMLImageElement) {
+        controlBtnImg.src = replayImg;
+      }
+    }
+  }
+
+  function playVideo(videoElement: HTMLVideoElement) {
+    videoElement.play();
+    video.isPlaying = true;
+    if (controlBtnImg instanceof HTMLImageElement) {
+      controlBtnImg.src = pauseImg;
+    }
+  }
+
+  function pauseVideo(videoElement: HTMLVideoElement) {
+    videoElement.pause();
+    video.isPlaying = false;
+    if (controlBtnImg instanceof HTMLImageElement) {
+      controlBtnImg.src = playImg;
+    }
+  }
+
+  function initializeCarousel() {
+    videos.forEach((videoElement, index) => {
+      const progressBar = document.querySelector(`.progress-bar-${index + 1}`);
+      
+      // Keep video event listeners
+      videoElement.addEventListener('timeupdate', () => {
+        updateProgressBar(videoElement, progressBar, index + 1);
+      });
+
+      videoElement.addEventListener('ended', () => {
+        playNextVideo();
+      });
+    });
+
+    // Update click handlers for progress indicators
+    progressIndicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        videos[video.videoId].pause();
+        video.videoId = index;
+        
+        if (video.isLastVideo) {
+          video.isLastVideo = false;
+          if (controlBtnImg instanceof HTMLImageElement) {
+            controlBtnImg.src = pauseImg;
+          }
+        }
+        
+        gsap.to("#slider", {
+          transform: `translateX(${-100 * index}%)`,
+          duration: 0.5, // This is the slider transition speed (2 seconds)
+          ease: "power2.inOut",
+        });
+        
+        updateProgressIndicators();
+        updateBackgroundColor(index);
+        updateTextContent(index);
+        playVideo(videos[index]);
+      });
+    });
+
+    // Update control button click handler
+    controlBtn.addEventListener('click', () => {
+      const currentVideo = videos[video.videoId];
+      
+      if (video.isLastVideo) {
+        video.isLastVideo = false;
+        video.videoId = 0;
+        
+        videos.forEach((_, index) => {
+          const progressBar = document.querySelector(`.progress-bar-${index + 1}`);
+          if (progressBar) {
+            (progressBar as HTMLElement).style.width = '0%';
+          }
+        });
+
+        gsap.to("#slider", {
+          transform: 'translateX(0)',
+          duration: 0.5, // This is the slider transition speed (2 seconds)
+          ease: "power2.inOut",
+        });
+
+        updateProgressIndicators();
+        updateBackgroundColor(0);
+        updateTextContent(0);
+        playVideo(videos[0]);
+        return;
+      }
+
+      if (video.isPlaying) {
+        pauseVideo(currentVideo);
+      } else {
+        playVideo(currentVideo);
+      }
+    });
+
+    // Set initial background color
+    updateBackgroundColor(0);
+  }
+
+  // Initialize component
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeCarousel();
+    updateTextContent(0);
+  });
+</script>

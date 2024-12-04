@@ -1,0 +1,118 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import ImageComp from '@components/ImageComp.astro';
+
+// Get data from WordPress API
+const response = await fetch('https://northernsky.auxcgen.com/wp-json/wp/v2/pages/510');
+const pageData = await response.json();
+
+// Extract meta_box data
+const { corporate_profile, md_profile, directors_profile, certificate_images_upload } = pageData.meta_box;
+---
+
+<Layout title="About Us - NorthernSky Properties">
+  <div class="bg-darkColor relative z-20">
+    <Header />
+  </div>
+  <main class="bg-white text-darkColor mt-[4.7rem] lg:mt-[7.5rem] 2lg:mt-[8rem]">
+    <!-- About Banner -->
+    <div
+      class="relative h-[33dvh] overflow-hidden bg-darkColor md:h-[60vh] lg:h-[70dvh] 2lg:h-[64.5dvh] 3lg:h-[65dvh] hd:h-[75dvh] 2k:h-[78dvh]"
+    >
+      <div class="containerw h-full">
+        <div class="absolute inset-x-0 bottom-0 flex items-end justify-center overflow-hidden">
+          <span
+            class="fontContactBg mb-[-5vw] font-bold uppercase leading-none tracking-normal opacity-20 2lg:mb-[-8vw] 3lg:mb-[-8vw]"
+          >
+            ABOUT
+          </span>
+        </div>
+        <div class="relative z-10 flex h-full flex-col items-start justify-end 2lg:items-center">
+          <span class="fontContact mb-4 uppercase tracking-widest text-white md:mb-8 2lg:mb-12 3lg:mb-16">
+            About Us
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="containerw md:py-24 2lg:py-12 2lg:px-[25rem]">
+      <!-- Horizontal line -->
+      <div class="my-12 h-[1px] w-full bg-[#D1DFE9] 2lg:mb-20 2lg:mt-48"></div>
+
+      <!-- Corporate Profile -->
+      <section class="container mb-24 md:mb-32" id="corporate-profile">
+        <h2
+          class="abouth2 mb-12 font-bold uppercase tracking-[3.5px] text-[#385772] md:mb-16 2lg:mb-20 md:text-left 2lg:tracking-[8.5px]"
+        >
+          Corporate Profile
+        </h2>
+        <div class="aboutp" set:html={corporate_profile} />
+      </section>
+
+      <!-- Board of Directors -->
+      <section class="container mb-24 md:mb-32" id="board-of-directors">
+        <!-- Horizontal line -->
+        <div class="my-24 h-[1px] w-full bg-[#D1DFE9] 2lg:mb-[7.5rem] 2lg:mt-[14.5rem]"></div>
+        <h2
+          class="abouth2 mb-16 font-bold uppercase tracking-[3.5px] text-[#385772] md:text-left 2lg:mb-40 2lg:tracking-[8.5px]"
+        >
+          Board of Directors
+        </h2>
+
+        {/* MD's Profile */}
+        <div id="md">
+          <span class="font50 mb-8 block text-left font-bold tracking-[1px] text-[#385772] md:mb-12">
+            MD's Profile
+          </span>
+          <p class="aboutp" set:html={md_profile} />
+        </div>
+
+        {/* Director's Profile */}
+        <div class="mt-16 md:mt-24">
+          <div class="my-16 h-[1px] w-full bg-[#D1DFE9] 2lg:mb-[7.5rem] 2lg:mt-[11rem]"></div>
+          <span class="font50 mb-8 block text-left font-bold tracking-[1px] text-[#385772] md:mb-20">
+            Director's Profile
+          </span>
+          <p set:html={directors_profile} />
+        </div>
+      </section>
+
+      <!-- Our Certifications -->
+      <section class="container mb-24 2lg:mb-40" id="certifications">
+        <div class="my-12 h-[1px] w-full bg-[#D1DFE9] 2lg:mb-[6.7rem] 2lg:mt-[12rem]"></div>
+        <h2
+          class="abouth2 mb-16 text-center font-bold uppercase tracking-[3.5px] text-[#385772] md:text-left 2lg:mb-32 2lg:tracking-[8.5px]"
+        >
+          Our Certifications
+        </h2>
+        <div class="grid grid-cols-3 gap-[10rem] md:grid-cols-3">
+          {
+            certificate_images_upload.map(
+              (cert, index) =>
+                cert.url && (
+                  <div class="flex items-center justify-center rounded-[2rem] overflow-hidden w-[27rem] h-[17rem]">
+                    <ImageComp
+                      imagePath={cert.url}
+                      altText={`Certification ${index + 1}`}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                )
+            )
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style is:global>
+  .aboutp p:first-of-type::first-letter {
+    font-size: 6rem;
+    line-height: 6rem;
+  }
+</style>

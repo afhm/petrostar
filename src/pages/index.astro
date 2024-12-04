@@ -1,0 +1,22 @@
+---
+import Layout from '@layouts/Layout.astro';
+import View360 from '@components/360 viewer/View360.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+---
+
+<Layout title="Emdak Studios">
+  <section class="overflow-hidden">
+    <!-- <View360 /> -->
+    <Header />
+    <div class="bg-textActiveBG flex h-[80vh] w-full items-center justify-center bg-lightColor px-5">
+      <div class="containerw">
+        <a href="/360viewer">
+          <h4 class="font52 text-center font-semibold text-darkColor">Open 360 viewer</h4>
+        </a>
+      </div>
+    </div>
+    <Footer />
+  </section>
+  <!-- <div class="h-[100dvh] w-full bg-red-500"></div> -->
+</Layout>
