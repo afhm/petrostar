@@ -1,66 +1,52 @@
 import { defineConfig } from 'astro/config';
 import robotsTxt from 'astro-robots-txt';
 import sitemap from 'astro-sitemap';
+import netlify from '@astrojs/netlify';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
-import vercel from '@astrojs/vercel';
-// import icon from "astro-icon";
+
+import alpinejs from '@astrojs/alpinejs';
 
 // import swup from '@swup/astro';
 
 // https://astro.build/config
 export default defineConfig({
-    // prefetch: {
-    //     prefetchAll: true,
-    //     defaultStrategy: 'load',
-    // },
+    prefetch: {
+        prefetchAll: false,
+        defaultStrategy: 'load',
+    },
 
     // },
-    site: 'https://www.creative-hive.co',
+    site: 'https://www.petrostarinnovative.com',
+    integrations: [robotsTxt(), sitemap(), tailwind({
+        config: {
+            applyBaseStyles: false,
+        },
+    }), (await import('astro-compress')).default({
+        Image: false,
+    }), // swup({
+    //   theme: 'fade', reloadScripts: false,
 
-    integrations: [
-        robotsTxt(),
-        sitemap(),
-        // icon(),
-        tailwind({
-            config: {
-                applyBaseStyles: false,
-            },
-        }),
-        (await import('astro-compress')).default({
-            Image: false,
-        }),
-        // swup({
-        //   theme: 'fade', reloadScripts: false,
+    //   progress: true,
 
-        //   progress: true,
-
-        //   preload: {
-        //     hover: true,
-        //   }
-        // })
-        react(),
-    ],
-
+    //   preload: {
+    //     hover: true,
+    //   }
+    // })
+    react(), alpinejs()],
+    output: "server",
+    adapter: netlify({
+        cacheOnDemandPages: true,
+    }),
+    experimental: {
+        // serverIslands: true
+    },
     image: {
         remotePatterns: [
             {
                 protocol: 'https',
             },
         ],
-        domains: ['creativehive.auxcgen.com'],
+        domains: ['northernsky.auxcgen.com'],
     },
-
-    output: 'server',
-    adapter: vercel({
-        imageService: true,
-        isr: {
-            expiration: 3600,
-        },
-        imagesConfig: {
-            sizes: [420, 640, 1280, 1920],
-            formats: ["image/avif"],
-            domains: ["creativehive.auxcgen.com"],
-        },
-    }),
 });
