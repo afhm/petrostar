@@ -55,11 +55,9 @@ export default defineConfig({
     adapter: vercel({
         maxDuration: 60,
         imageService: true,
-        isr: {
-            expiration: 3600,
-        },
+
         imagesConfig: {
-            sizes: [420, 640, 1280, 1920],
+            sizes: [420, 640, 1280, 1920, 2048],
             formats: ["image/avif"],
             domains: ["creativehive.auxcgen.com"],
         },
