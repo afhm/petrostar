@@ -1,0 +1,65 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"src": "^/_astro/(.*)$",
+			"headers": {
+				"cache-control": "public, max-age=31536000, immutable"
+			},
+			"continue": true
+		},
+		{
+			"handle": "filesystem"
+		},
+		{
+			"src": "^\\/_image\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/404\\/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^\\/about\\/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^\\/contact\\/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^\\/project\\/([^/]+?)\\/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^\\/services\\/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^\\/$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "/.*",
+			"dest": "_render",
+			"status": 404
+		}
+	],
+	"images": {
+		"sizes": [
+			320,
+			640,
+			1280,
+			1920,
+			2560
+		],
+		"formats": [
+			"image/avif"
+		],
+		"domains": [
+			"northernsky.auxcgen.com",
+			"northernsky.auxcgen.com"
+		],
+		"remotePatterns": []
+	}
+}
