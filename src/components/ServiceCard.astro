@@ -1,0 +1,28 @@
+---
+interface Props {
+  number: string;
+  image: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const { number, image, icon, title, description } = Astro.props;
+import ImageComp from './ImageComp.astro';
+---
+
+<div class="item">
+  <div class="image">
+    <ImageComp imagePath={image} altText={title} />
+    <span>{number}</span>
+    <div class="line-one"></div>
+    <div class="line-two"></div>
+  </div>
+  <div class="content">
+    <div class="icon">
+      <ImageComp imagePath={icon} altText={`${title} icon`} />
+    </div>
+    <h2><a>{title}</a></h2>
+    <p>{description}</p>
+  </div>
+</div>
