@@ -31,7 +31,7 @@ const slides = [
               />
               <div class="slide-overlay" />
               <div class="container-fluid">
-                <div class="slide-content">
+                <div class="slide-content md:!mt-[280px]">
                   <div data-swiper-parallax="300" class="slide-title">
                     <h2>{slide.title}</h2>
                   </div>
@@ -153,7 +153,6 @@ const slides = [
     line-height: 90px;
     margin: 10px 0 15px;
     color: #fff;
-    padding-top: 6rem;
     text-transform: capitalize;
     letter-spacing: -0.02em;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -189,8 +188,6 @@ const slides = [
       height: 680px;
     }
     .slide-title h2 {
-      font-size: 50px;
-      padding-top: 4rem;
       line-height: 60px;
     }
   }
@@ -203,8 +200,7 @@ const slides = [
       padding-left: 30px;
     }
     .slide-title h2 {
-      font-size: 40px;
-      padding-top: 4rem;
+      font-size: 30px;
       line-height: 55px;
     }
   }
@@ -215,7 +211,7 @@ const slides = [
     }
     .slide-content {
       padding-left: 10px;
-      text-align: center;
+      text-align: left;
     }
     .swiper-button-next,
     .swiper-button-prev {
