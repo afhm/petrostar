@@ -2,10 +2,20 @@
 import Layout from '@layouts/Layout.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
+import Breadcrumb from '@components/Breadcrumb.astro';
+import Services from '@components/Services.astro';
 ---
 
-<Layout>
+<Layout
+  title="Products & Services"
+  description="Engineering and instrumentation, specialty materials and alloys, oilfield equipment and supplies, and downhole solutions from Petrostar Innovative Solutions Limited, Port Harcourt."
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/services' },
+  ]}
+>
   <Header />
-
+  <Breadcrumb title="Services" heading="Products & Services" />
+  <Services layout="grid" />
   <Footer />
 </Layout>

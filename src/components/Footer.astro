@@ -1,23 +1,20 @@
 ---
 import ImageComp from './ImageComp.astro';
+import { services, serviceUrl } from '@data/services';
 
-const services = [
-  {
-    title: 'Engineering & Instrumentation',
-    link: '/',
-  },
-  {
-    title: 'Specialty Materials & Alloys',
-    link: '/',
-  },
-  {
-    title: 'Oilfield Equipment & Supplies',
-    link: '/',
-  },
-  {
-    title: 'Downhole Solutions',
-    link: '/',
-  },
+const navigation = [
+  { title: 'Home', link: '/' },
+  { title: 'About', link: '/about' },
+  { title: 'Services', link: '/services' },
+  { title: 'Contact', link: '/contact' },
+];
+
+// TODO: swap these for the real profile URLs once the accounts are confirmed.
+const socials = [
+  { label: 'Facebook', icon: 'ti-facebook', link: '/contact' },
+  { label: 'Twitter', icon: 'ti-twitter-alt', link: '/contact' },
+  { label: 'Instagram', icon: 'ti-instagram', link: '/contact' },
+  { label: 'LinkedIn', icon: 'ti-linkedin', link: '/contact' },
 ];
 ---
 
@@ -29,17 +26,24 @@ const services = [
         <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
           <div class="widget about-widget">
             <div class="logo widget-title">
-              <ImageComp imagePath="/src/images/Petrostar-Colour-Logo.png" className="inline" altText="Logo" />
+              <a href="/">
+                <ImageComp imagePath="/src/images/Petrostar-Colour-Logo.png" className="inline" altText="Petrostar Innovative" />
+              </a>
             </div>
             <p>
               Providing innovative solutions and services across various industries, ensuring quality and reliability.
             </p>
             <div class="social-widget">
               <ul>
-                <li><a href="#"><i class="ti-facebook"></i></a></li>
-                <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
-                <li><a href="#"><i class="ti-instagram"></i></a></li>
-                <li><a href="#"><i class="ti-linkedin"></i></a></li>
+                {
+                  socials.map((social) => (
+                    <li>
+                      <a href={social.link} aria-label={social.label}>
+                        <i class={social.icon} />
+                      </a>
+                    </li>
+                  ))
+                }
               </ul>
             </div>
           </div>
@@ -54,7 +58,7 @@ const services = [
               {
                 services.map((service) => (
                   <li>
-                    <a href={service.link}>{service.title}</a>
+                    <a href={serviceUrl(service.slug)}>{service.title}</a>
                   </li>
                 ))
               }
@@ -68,9 +72,13 @@ const services = [
               <h3>Navigation</h3>
             </div>
             <ul>
-              <li><a href="index">Home</a></li>
-              <li><a href="contact">Contact</a></li>
-              <li><a href="services">Services</a></li>
+              {
+                navigation.map((item) => (
+                  <li>
+                    <a href={item.link}>{item.title}</a>
+                  </li>
+                ))
+              }
             </ul>
           </div>
         </div>
@@ -97,7 +105,7 @@ const services = [
         <div class="col col-xs-12">
           <p class="copyright">
             Copyright © Petrostar Innovative 2024 <br /> Developed by
-            <a href="https://alifsense.com" target="_blank" rel="noopener noreferrer" title="wpOceans">AlifSense</a>
+            <a href="https://alifsense.com" target="_blank" rel="noopener noreferrer" title="AlifSense">AlifSense</a>
             All Rights Reserved.
           </p>
         </div>

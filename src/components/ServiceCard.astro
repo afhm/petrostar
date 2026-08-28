@@ -1,17 +1,24 @@
 ---
 interface Props {
+  slug: string;
   number: string;
   image: string;
   icon: string;
   title: string;
   description: string;
+  /**
+   * Only set on the grid layout. The homepage carousel runs Owl with loop:true,
+   * which clones its items - emitting ids there would duplicate them.
+   */
+  anchorId?: string;
 }
 
-const { number, image, icon, title, description } = Astro.props;
+const { slug, number, image, icon, title, description, anchorId } = Astro.props;
 import ImageComp from './ImageComp.astro';
+import { serviceUrl } from '@data/services';
 ---
 
-<div class="item">
+<div class="item" id={anchorId}>
   <div class="image">
     <ImageComp imagePath={image} altText={title} />
     <span>{number}</span>
@@ -22,7 +29,7 @@ import ImageComp from './ImageComp.astro';
     <div class="icon">
       <ImageComp imagePath={icon} altText={`${title} icon`} />
     </div>
-    <h2><a>{title}</a></h2>
+    <h2><a href={serviceUrl(slug)}>{title}</a></h2>
     <p>{description}</p>
   </div>
 </div>

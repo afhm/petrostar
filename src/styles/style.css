@@ -602,6 +602,7 @@ img {
   text-align: center;
   margin-top: 120px;
 }
+.wpo-breadcumb-area .wpo-breadcumb-wrap h1,
 .wpo-breadcumb-area .wpo-breadcumb-wrap h2 {
   font-size: 60px;
   color: #fff;
@@ -610,7 +611,8 @@ img {
   margin-bottom: 20px;
 }
 @media (max-width: 767px) {
-  .wpo-breadcumb-area .wpo-breadcumb-wrap h2 {
+  .wpo-breadcumb-area .wpo-breadcumb-wrap h1,
+.wpo-breadcumb-area .wpo-breadcumb-wrap h2 {
     font-size: 30px;
     line-height: 35px;
     margin-bottom: 10px;

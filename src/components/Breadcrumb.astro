@@ -1,12 +1,23 @@
+---
+interface Props {
+  /** Short label used in the breadcrumb trail. */
+  title: string;
+  /** Page <h1>. Falls back to the trail label. */
+  heading?: string;
+}
+
+const { title, heading } = Astro.props;
+---
+
 <div class="wpo-breadcumb-area">
   <div class="container">
     <div class="row">
       <div class="col-12">
         <div class="wpo-breadcumb-wrap">
-          <h2>Contact</h2>
+          <h1>{heading ?? title}</h1>
           <ul>
             <li><a href="/">Home</a></li>
-            <li><span>Contact</span></li>
+            <li><span>{title}</span></li>
           </ul>
         </div>
       </div>

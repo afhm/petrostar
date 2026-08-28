@@ -1,50 +1,51 @@
 ---
 import ServiceCard from './ServiceCard.astro';
+import { services } from '@data/services';
 
-const services = [
-  {
-    number: '01',
-    image: '/src/images/services/s1.png',
-    icon: '/src/images/icon-1.svg',
-    title: 'Engineering & Instrumentation',
-    description:
-      'Providing cutting-edge engineering solutions and precision instrumentation for industrial automation, process control, and measurement systems.',
-  },
-  {
-    number: '02',
-    image: '/src/images/services/s2.png',
-    icon: '/src/images/icon-2.svg',
-    title: 'Specialty Materials & Alloys',
-    description:
-      'Supplying high-performance materials and custom alloys engineered for extreme conditions, ensuring durability and reliability in demanding applications.',
-  },
-  {
-    number: '03',
-    image: '/src/images/services/s3.png',
-    icon: '/src/images/icon-3.svg',
-    title: 'Oilfield Equipment & Supplies',
-    description:
-      'Delivering comprehensive oilfield solutions including drilling equipment, wellhead components, and maintenance supplies for optimal field operations.',
-  },
-  {
-    number: '04',
-    image: '/src/images/services/s4.png',
-    icon: '/src/images/icon-4.svg',
-    title: 'Downhole Solutions',
-    description:
-      'Offering advanced downhole tools and technologies designed to enhance well performance, improve recovery rates, and ensure operational efficiency.',
-  },
-];
+interface Props {
+  /**
+   * 'carousel' is the homepage Owl slider. 'grid' is a static layout, used on
+   * /services so the per-service anchor links have a stable, unique target.
+   */
+  layout?: 'carousel' | 'grid';
+}
+
+const { layout = 'carousel' } = Astro.props;
+const isGrid = layout === 'grid';
 ---
 
-<section class="wpo-service-section section-padding">
+<section class="wpo-service-section section-padding" id="services">
   <div class="service-wrap">
     <div class="wpo-section-title">
       <h2>What We Offer</h2>
       <h3>Products & Services</h3>
     </div>
-    <div class="service-slider owl-carousel">
-      {services.map((service) => <ServiceCard {...service} />)}
+    <div class:list={['service-slider', isGrid ? 'service-grid' : 'owl-carousel']}>
+      {services.map((service) => <ServiceCard {...service} anchorId={isGrid ? service.slug : undefined} />)}
     </div>
   </div>
 </section>
+
+<style>
+  /* Static layout: no Owl, so the ids stay unique and #anchor links land. */
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+  }
+
+  /* Clear the fixed site header when jumping to a service anchor. */
+  .service-grid :global(.item) {
+    scroll-margin-top: 140px;
+  }
+
+  @media (max-width: 767px) {
+    .service-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-grid :global(.item) {
+      scroll-margin-top: 90px;
+    }
+  }
+</style>

@@ -4,19 +4,20 @@ import { AstroFont } from 'astro-font';
 import TwSizeIndicator from '@components/TwSizeIndicator.astro';
 import SEO from '@components/SEO.astro';
 
+interface Crumb {
+  name: string;
+  url: string;
+}
+
 export interface Props {
   title?: string;
   description?: string;
-  siteName?: string;
-  canonical?: string;
-  ogImage?: string;
-  ogType?: string;
-  twitterHandle?: string;
-  slug?: string;
+  image?: string;
+  noindex?: boolean;
+  breadcrumbs?: Crumb[];
 }
 
-// set sitename based on pathname
-const pathname = new URL(Astro.request.url).pathname.slice(1);
+const { title, description, image, noindex, breadcrumbs } = Astro.props;
 ---
 
 <html lang="en">
@@ -26,7 +27,7 @@ const pathname = new URL(Astro.request.url).pathname.slice(1);
       name="viewport"
       content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
     />
-    <SEO />
+    <SEO {title} {description} {image} {noindex} {breadcrumbs} />
 
     <!-- /* custom fonts */ -->
 

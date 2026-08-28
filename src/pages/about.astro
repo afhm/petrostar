@@ -2,10 +2,20 @@
 import Layout from '@layouts/Layout.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
+import Breadcrumb from '@components/Breadcrumb.astro';
+import AboutSection from '@components/AboutSection.astro';
 ---
 
-<Layout>
+<Layout
+  title="About Us"
+  description="Petrostar Innovative Solutions Limited delivers cost-effective industrial solutions in collaboration with world-renowned manufacturers, backed by a dedicated team of engineers serving the oil and gas sector."
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'About', url: '/about' },
+  ]}
+>
   <Header />
-
+  <Breadcrumb title="About" heading="About Petrostar Innovative" />
+  <AboutSection />
   <Footer />
 </Layout>

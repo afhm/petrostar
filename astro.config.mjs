@@ -8,6 +8,13 @@ import vercel from '@astrojs/vercel';
 
 // import swup from '@swup/astro';
 
+// Apex 308-redirects to www, so www is the canonical host.
+const SITE = 'https://www.petrostarin.com';
+
+// This is an SSR project, so astro-sitemap cannot discover routes on its own
+// ("No pages found!") and emits no sitemap at all. List the real pages here.
+const PAGES = ['/', '/about', '/services', '/contact'];
+
 // https://astro.build/config
 export default defineConfig({
   // prefetch: {
@@ -16,11 +23,13 @@ export default defineConfig({
   // },
 
   // },
-  site: 'https://www.creative-hive.co',
+  site: SITE,
 
   integrations: [
     robotsTxt(),
-    sitemap(),
+    sitemap({
+      customPages: PAGES.map((path) => new URL(path, SITE).href),
+    }),
     // icon(),
     tailwind({
       config: {
@@ -42,14 +51,6 @@ export default defineConfig({
     react(),
   ],
 
-  image: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-      },
-    ],
-    domains: ['creativehive.auxcgen.com'],
-  },
 
   output: 'server',
   adapter: vercel({
@@ -60,7 +61,8 @@ export default defineConfig({
     imagesConfig: {
       sizes: [420, 640, 1280, 1920],
       formats: ['image/avif'],
-      domains: ['creativehive.auxcgen.com'],
+      // No remote image hosts: every image on this site is local.
+      domains: [],
     },
   }),
 });

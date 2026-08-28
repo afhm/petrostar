@@ -1,66 +1,122 @@
 ---
-// Constants for Petrostar Innovative
-const DEFAULT_TITLE = 'Petrostar Innovative';
-const DEFAULT_DESCRIPTION = 'Leading Industrial Solutions Provider | Engineering Excellence';
-const BASE_URL = 'https://petrostarin.com';
-
-// Pre-define meta information
-const SEO_DATA = {
-  title: 'Petrostar Innovative | Industrial Engineering & Manufacturing Solutions',
-  description:
-    'Petrostar Innovative delivers cutting-edge industrial solutions, specialized engineering services, and innovative manufacturing technologies. Leading the industry with excellence and reliability since 1995.',
-  ogImage: '/images/petrostar-banner.jpg', // Ensure this image exists in your public folder
-  ogType: 'website',
-  ogSiteName: 'Petrostar Innovative',
-  twitterCard: 'summary_large_image',
-};
-
-// Simple URL processing
-function getCanonicalUrl(pathname: string): string {
-  const url = new URL(pathname, BASE_URL);
-  return url.href.endsWith('/') ? url.href.slice(0, -1) : url.href;
+interface Crumb {
+  name: string;
+  url: string;
 }
 
-// Main component logic
-const canonicalUrl = getCanonicalUrl(Astro.url.pathname);
+interface Props {
+  /** Page-specific title. Rendered as "<title> | Petrostar Innovative". */
+  title?: string;
+  description?: string;
+  /** Absolute-from-root path to a social share image. */
+  image?: string;
+  noindex?: boolean;
+  breadcrumbs?: Crumb[];
+}
 
-// JSON-LD data for industrial company
-const jsonLd = {
+// Apex 308-redirects to www, so www is the canonical host.
+const BASE_URL = 'https://www.petrostarin.com';
+const SITE_NAME = 'Petrostar Innovative';
+
+const DEFAULT_TITLE = 'Industrial Engineering & Oilfield Solutions';
+const DEFAULT_DESCRIPTION =
+  'Petrostar Innovative Solutions Limited supplies engineering and instrumentation, specialty materials and alloys, oilfield equipment and downhole solutions to the oil and gas, power, cement and petrochemical industries from Port Harcourt, Nigeria.';
+const DEFAULT_IMAGE = '/images/og-image.jpg';
+
+const {
+  title,
+  description = DEFAULT_DESCRIPTION,
+  image = DEFAULT_IMAGE,
+  noindex = false,
+  breadcrumbs,
+} = Astro.props;
+
+const pageTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | ${DEFAULT_TITLE}`;
+
+const absoluteUrl = (path: string): string => new URL(path, BASE_URL).href;
+
+function getCanonicalUrl(pathname: string): string {
+  const url = new URL(pathname, BASE_URL);
+  // Strip a trailing slash on every path except the root, so /services and
+  // /services/ report the same canonical URL.
+  if (url.pathname !== '/' && url.pathname.endsWith('/')) {
+    url.pathname = url.pathname.replace(/\/+$/, '');
+  }
+  return url.href;
+}
+
+const canonicalUrl = getCanonicalUrl(Astro.url.pathname);
+const imageUrl = absoluteUrl(image);
+
+const organization = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Petrostar Innovative',
+  '@id': `${BASE_URL}/#organization`,
+  name: 'Petrostar Innovative Solutions Limited',
+  alternateName: SITE_NAME,
   url: BASE_URL,
-  logo: `${BASE_URL}/images/petrostar-logo.png`,
-  description: SEO_DATA.description,
+  logo: absoluteUrl('/images/petrostar-logo.png'),
+  image: imageUrl,
+  description: DEFAULT_DESCRIPTION,
+  email: 'info@petrostarin.com',
   address: {
     '@type': 'PostalAddress',
-    addressCountry: 'IN',
+    streetAddress: '4 Amazing Grace Close, Off East-West Road',
+    addressLocality: 'Port Harcourt',
+    addressRegion: 'Rivers State',
+    addressCountry: 'NG',
   },
-  sameAs: ['https://linkedin.com/company/petrostar-innovative', 'https://twitter.com/petrostarin'],
 };
+
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${BASE_URL}/#website`,
+  url: BASE_URL,
+  name: SITE_NAME,
+  publisher: { '@id': `${BASE_URL}/#organization` },
+};
+
+const breadcrumbLd = breadcrumbs?.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbs.map((crumb, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: crumb.name,
+        item: absoluteUrl(crumb.url),
+      })),
+    }
+  : null;
 ---
 
-<!-- Rest of the template remains the same, just using our hardcoded values -->
-<title>{SEO_DATA.title}</title>
-<meta name="description" content={SEO_DATA.description} />
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+<meta name="theme-color" content="#04123f" />
 
-<!-- Open Graph Meta Tags -->
+<!-- Open Graph -->
 <meta property="og:url" content={canonicalUrl} />
-<meta property="og:type" content={SEO_DATA.ogType} />
-<meta property="og:title" content={SEO_DATA.title} />
-<meta property="og:description" content={SEO_DATA.description} />
-<meta property="og:image" content={SEO_DATA.ogImage} />
-<meta property="og:site_name" content={SEO_DATA.ogSiteName} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Petrostar Innovative — industrial engineering and oilfield solutions" />
+<meta property="og:site_name" content={SITE_NAME} />
 <meta property="og:locale" content="en_US" />
 
-<!-- Twitter Meta Tags -->
-<meta name="twitter:card" content={SEO_DATA.twitterCard} />
-<meta name="twitter:title" content={SEO_DATA.title} />
-<meta name="twitter:description" content={SEO_DATA.description} />
-<meta name="twitter:image" content={SEO_DATA.ogImage} />
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content="Petrostar Innovative — industrial engineering and oilfield solutions" />
 
-<!-- Canonical URL -->
 <link rel="canonical" href={canonicalUrl} />
 
-<!-- JSON-LD -->
-<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+<script type="application/ld+json" set:html={JSON.stringify(organization)} />
+<script type="application/ld+json" set:html={JSON.stringify(website)} />
+{breadcrumbLd && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />}
