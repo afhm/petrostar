@@ -14,9 +14,9 @@ interface Props {
   breadcrumbs?: Crumb[];
 }
 
-// Apex 308-redirects to www, so www is the canonical host.
-const BASE_URL = 'https://www.petrostarin.com';
-const SITE_NAME = 'Petrostar Innovative';
+import { SITE_NAME, SITE_URL } from '@data/site';
+
+const BASE_URL = SITE_URL;
 
 const DEFAULT_TITLE = 'Industrial Engineering & Oilfield Solutions';
 const DEFAULT_DESCRIPTION =
