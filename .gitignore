@@ -22,7 +22,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
-robots.txt
+# robots.txt is now a committed source file in public/
+!public/robots.txt
 .netlify
 
 bun.lockb
