@@ -573,8 +573,8 @@
     /*------------------------------------------
         = project - SLIDER
     -------------------------------------------*/
-    if ($(".project-slider").length) {
-        $(".project-slider").owlCarousel({
+    if ($(".project-slider.owl-carousel").length) {
+        $(".project-slider.owl-carousel").owlCarousel({
             autoplay: false,
             smartSpeed: 300,
             loop: true,
@@ -646,8 +646,8 @@
     /*------------------------------------------
         = Service - slider
     -------------------------------------------*/
-    if ($(".service-slider").length) {
-        $(".service-slider").owlCarousel({
+    if ($(".service-slider.owl-carousel").length) {
+        $(".service-slider.owl-carousel").owlCarousel({
             autoplay: false,
             smartSpeed: 300,
             loop: true,

@@ -15,11 +15,13 @@ const isGrid = layout === 'grid';
 ---
 
 <section class="wpo-service-section section-padding" id="services">
-  <div class="service-wrap">
+  <div class:list={['service-wrap', isGrid && 'service-wrap-grid']}>
     <div class="wpo-section-title">
       <h2>What We Offer</h2>
       <h3>Products & Services</h3>
     </div>
+    <!-- NOTE: script.js inits Owl on `.service-slider.owl-carousel`, so the grid
+         keeps `.service-slider` for card styling without being hijacked. -->
     <div class:list={['service-slider', isGrid ? 'service-grid' : 'owl-carousel']}>
       {services.map((service) => <ServiceCard {...service} anchorId={isGrid ? service.slug : undefined} />)}
     </div>
@@ -27,16 +29,56 @@ const isGrid = layout === 'grid';
 </section>
 
 <style>
-  /* Static layout: no Owl, so the ids stay unique and #anchor links land. */
-  .service-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+  /* The theme pads .service-wrap on the left only, because the carousel is meant
+     to bleed off the right edge. A static grid needs the matching right padding
+     or the last card is clipped by the viewport. */
+  .service-wrap-grid {
+    padding-right: 160px;
+  }
+  @media (max-width: 1520px) {
+    .service-wrap-grid {
+      padding-right: 120px;
+    }
+  }
+  @media (max-width: 1299px) {
+    .service-wrap-grid {
+      padding-right: 30px;
+    }
+  }
+  @media (max-width: 1199px) {
+    .service-wrap-grid {
+      padding-right: 20px;
+    }
+  }
+  @media (max-width: 767px) {
+    .service-wrap-grid {
+      padding-right: 10px;
+    }
   }
 
-  /* Clear the fixed site header when jumping to a service anchor. */
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    align-items: stretch;
+  }
+
+  /* Equal-height cards: the source images have different aspect ratios, which
+     otherwise leaves the row ragged. */
   .service-grid :global(.item) {
+    display: flex;
+    flex-direction: column;
     scroll-margin-top: 140px;
+  }
+
+  .service-grid :global(.item .image img) {
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    height: auto;
+  }
+
+  .service-grid :global(.item .content) {
+    flex: 1;
   }
 
   @media (max-width: 767px) {
